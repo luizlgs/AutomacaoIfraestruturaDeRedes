@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Resultados dos Cálculos</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                padding-top: 50px;
+                margin: 0;
+                background-color: #f5f5f5;
+            }
+
+            .result-container {
+                width: 90%;
+                max-width: 1200px;
+                background: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .result-section {
+                flex: 1;
+                min-width: 200px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            h2 {
+                text-align: center;
+                color: #333333;
+                width: 100%;
+            }
+
+            .result-section h3 {
+                color: #4CAF50;
+                border-bottom: 2px solid #4CAF50;
+                padding-bottom: 5px;
+            }
+
+            .result-item {
+                font-size: 16px;
+                color: #333333;
+                line-height: 1.6;
+            }
+
+            .button-container {
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .back-btn {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .back-btn:hover {
+                background-color: #45a049;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="result-container">
+            <h2>Resultados dos Cálculos</h2>
+
+            <!-- Malha Horizontal -->
+            <div class="result-section" id="malhaHorizontal">
+                <h3>Malha Horizontal</h3>
+                <div class="result-item" id="malhaResults"></div>
+            </div>
+
+            <!-- Backbone Primário -->
+            <div class="result-section" id="backbonePrimario">
+                <h3>Backbone Primário</h3>
+                <div class="result-item" id="backbonePrimarioResults"></div>
+            </div>
+
+            <!-- Backbone Secundário, sempre visível -->
+            <div class="result-section" id="backboneSecundario">
+                <h3>Backbone Secundário</h3>
+                <div class="result-item" id="backboneSecundarioResults"></div>
+            </div>
+
+            <!-- Miscelânea -->
+            <div class="result-section" id="miscelaneaResults">
+                <h3>Miscelânea do backbone</h3>
+                <div class="result-item" id="miscelaneaResultsDisplay"></div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button class="back-btn" onclick="goBack()">Fazer outro cálculo</button>
+        </div>
+
+        <script>
+
+            function displayResults() {
+                const params = new URLSearchParams(window.location.search);
+                
+                // Cria um objeto para armazenar os dados recuperados
+                const data = {};
+            
+                // Itera sobre os parâmetros e os adiciona ao objeto
+                for (const [key, value] of params.entries()) {
+                    data[key] = value;
+                }
+                
+                var nPontos = data['pavimentos'] * data['pontos'];
+                var patchCordSeg = data['cftv'] * data['pavimentos'];
+                var patchCordDados = (data['dados']) + data['voip'];
+                var espelho2 = patchCordSeg;
+                var espelho4 = Math.floor(data['dados'] / 2) * data['pavimentos'];
+                var espelhos = espelho2 + espelho4;
+                var etiquetasTomEsp = nPontos + espelho2 + espelho4;
+
+                var caboUtp = Math.ceil((nPontos * data['distanciaMH']) / 305);
+        
+               
+         
+                if(data['rack'] === 'sim'){
+                    var fechadoouaberto = 'aberto';
+                }
+                else {
+                    var fechadoouaberto = 'fechado';
+                }
+
+                var ppMh = Math.ceil(data['pontos'] / 24);
+                var ppMhtot = ppMh * data['pavimentos'];
+
+                var sw = Math.ceil(ppMh);
+                var orgCabo = 2 * sw;
+                var etiquetaPortaPp = sw * 24;
+                var patchCables = data['dados'] + data['voip'] + data['cftv'];
+
+                if (data['rack'] = "sim") {
+                    var rack = Math.ceil(1.5 * (orgCabo + ppMh + sw + 4))
+                } else {
+                    var rack = Math.ceil(1.5 * (orgCabo + ppMh + sw + 4 + 4));
+                }
+
+                var unidRack = 1;
+                if (rack > 48) {
+                    unidRack = 2;
+                    rack = Math.floor(rack / 2);
+                } else {
+                    unidRack = 1;
+                }
+
+                if (rack % 4 !== 0) {
+                    rack += 4 - (rack % 4);
+                }
+                var metrosdecabooptico = 0
+                  for (var i=0; i < data['pavimentos'];i++){
+                     metrosdecabooptico += (data['distanciaBackbone'] * i) + 1;
+                 }
+
+
+                var porcaGaiola = rack * 4 ;
+    
+               
+                // Agora você pode usar o objeto data como desejar
+                console.log(data); // Exibe os dados no console
+                // Adicionar itens fixos na seção de Malha Horizontal
+                
+                const fixedItems = [
+                    `Tomada RJ 45 Fêmea (categoria ${data['categoria']}):${nPontos} unidades`,
+                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: azul): ${patchCordDados}`,
+                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: mesma do teto): ${patchCordSeg}`,
+                    `Espelho de conexão (Tamanho 2x4 ou 4x4): ${espelhos}`,
+                    `Etiquetas para identificação de tomadas e espelho: ${etiquetasTomEsp}`,
+                    `Cabo UTP rígido (categoria ${data['categoria']}): ${caboUtp} caixas`,
+                    `Etiqueta identificação do cabo de malha horizontal: ${2*nPontos} unidades`,
+                    `Switches 24 portas: ${ppMhtot}`,
+                    `PPMH (Patch Panel de Malha Horizontal): ${ppMhtot}`,
+                    `Organizador frontal de cabo - Tipo - (Unidade de altura e largura: 19 polegadas): ${orgCabo*data['pavimentos']}`,
+                    `Etiquetas de identificação de portas do Patch Panel: ${etiquetaPortaPp*data['pavimentos']}`,
+                    `Cordão de Ligação, flexível, (Patch Cable), (categoria ${data['categoria']}), (Tamanho: 2m), (cor: azul): ${data['dados']*data['pavimentos']}`,
+                    `Cordão de Ligação, flexível, (Patch Cable), (categoria ${data['categoria']}), (Tamanho: 2m), (cor: amarelo): ${data['voip']*data['pavimentos']}`,
+                    `Cordão de Ligação, flexível, (Patch Cable), (categoria ${data['categoria']}), (Tamanho: 2m), (cor: vermelho): ${data['cftv']*data['pavimentos']}`,
+                    `Rack (${fechadoouaberto}), (Tamanho = ${rack}U) = ${unidRack*data['pavimentos']}`,
+                    `Organizador lateral para Rack (Para os tamanhos correspondentes): ${2 * unidRack * data['pavimentos']}`,
+                    `Bandeja fixa - 19" de largura: ${unidRack * data['pavimentos']}`,
+                    `Bandeja deslizante - 19" de largura: ${unidRack * data['pavimentos']}`,
+                    `Parafuso Porca Gaiola (conjunto com 10 unidades): ${((porcaGaiola) * data['pavimentos'])/10}`,
+                    `Abraçadeira de velcro: ${unidRack * data['pavimentos']}`,
+                    `Abraçadeira Hellermann (conjunto com 100 unidades): ${unidRack * data['pavimentos']}`,
+                    `Filtro de linha com 06 tomadas: ${unidRack * data['pavimentos']}`,
+                    `Etiquetas para Rack: ${unidRack * data['pavimentos']}`,
+                    `Etiquetas para identificação dos patch Cables: ${(2 * data['pavimentos'] * data['cftv']) + (2 * data['pavimentos'] * data['dados']) + (2 * data['pavimentos'] * data['voip'])}`
+                ];
+
+                const fixedItems2 = [
+                    `DIO (Unid.):${data['pavimentos'] * data['backbones']} `,
+                    `Caixa de emenda (Unid.):${data['pavimentos'] * data['backbones']}`,
+                    `Pigtail ${data['caboFibra']} 50x125 simples LC (Unid.):${data['paresFibras']*2* data['pavimentos']}`,
+                    `Acoplador óptico 50x125 LC azul (Unid.): ${data['paresFibras']*data['pavimentos'] * data['backbones']}`,
+                    `Cordão óptico 50x125 simples LC (metros): ${data['paresFibras']*data['pavimentos'] * data['backbones'] * 3}`,
+                    `Cabo Óptico ${data['caboFibra']} 50x125 Tight Buffer ${data['paresFibras'] * 2} fibras (metros):  ${metrosdecabooptico}`,
+                    `Rack(s) primarios: ${data['backbones'] * data['pavimentos']}`
+                ];
+                
+               
+                const fixedItems3 = [];
+
+                if (data['backboneExistente'] === "nao") {
+                    fixedItems3.push(`Backbone Secundário inexistente`);
+                    
+                } else { 
+                        fixedItems3.push(
+                        `DIO (Unid.):1`,
+                        `Caixa de emenda (Unid.):1`,
+                        `Pigtail SM 50x125 simples LC (Unid.):${data['paresFibras']}`,
+                        `Acoplador óptico 50x125 LC azul (Unid.):${data['backboneExistente']}`,
+                        `Cordão óptico 50x125 simples LC (metros):${data['paresFibras'] * 3}`,
+                        `Rack(s) secundarios:1`
+                        );
+             
+                }
+                
+                 const fixedItems4 = [
+                    `Abraçadeira de velcro para rack(s) de bacbone: ${data['backbones'] * data['pavimentos'] + 1}`,
+                    `Abraçadeira Hellermann conjunto com 100 Unidades para rack(s) de bacbone: ${data['backbones'] * data['pavimentos'] + 1}`,
+                    `Filtro de linha com 08 tomadas para rack(s) de backbone:${(data['backbones'] * data['pavimentos'] )+1}`,
+                    `Etiquetas para rack(s) de bacbone:${(data['backbones'] * data['pavimentos'] )+1}`,
+                    `total de rack(s) de backbone:${data['backbones'] * data['pavimentos'] + 1} `
+                ];
+
+                // Adiciona os itens às seções correspondentes
+                fixedItems.forEach(item => {
+                    document.getElementById('malhaResults').innerHTML += `<p><strong>${item}</strong></p>`;
+                });
+
+                fixedItems2.forEach(item => {
+                    document.getElementById('backbonePrimarioResults').innerHTML += `<p><strong>${item}</strong></p>`;
+                });
+
+                fixedItems3.forEach(item => {
+                    document.getElementById('backboneSecundarioResults').innerHTML += `<p><strong>${item}</strong></p>`;
+                });
+
+                fixedItems4.forEach(item => {
+                    document.getElementById('miscelaneaResultsDisplay').innerHTML += `<p><strong>${item}</strong></p>`;
+                });    
+            }
+
+            function goBack() {
+                window.location.href = "index.html"; // Redireciona para a página inicial
+            }
+
+            displayResults();
+        </script>
+    </body>
+    </html>
