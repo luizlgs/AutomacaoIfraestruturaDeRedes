@@ -84,13 +84,13 @@
 
             <!-- Backbone Primário -->
             <div class="result-section" id="backbonePrimario">
-                <h3>Backbone Primário</h3>
+                <h3 id="backbone_primario">Backbone Primário</h3>
                 <div class="result-item" id="backbonePrimarioResults"></div>
             </div>
 
             <!-- Backbone Secundário, sempre visível -->
             <div class="result-section" id="backboneSecundario">
-                <h3>Backbone Secundário</h3>
+                <h3 id="backbone_secundario">Backbone Secundário</h3>
                 <div class="result-item" id="backboneSecundarioResults"></div>
             </div>
 
@@ -106,7 +106,7 @@
         </div>
 
         <script>
-
+            
             function displayResults() {
                 const params = new URLSearchParams(window.location.search);
                 
@@ -163,13 +163,22 @@
                     rack += 4 - (rack % 4);
                 }
                 var metrosdecabooptico = 0
-                  for (var i=0; i < data['pavimentos'];i++){
+                  for (var i=1; i < data['pavimentos'];i++){
                      metrosdecabooptico += (data['distanciaBackbone'] * i) + 1;
                  }
 
 
                 var porcaGaiola = rack * 4 ;
-                var miscelaniabackbone = 0; 
+                var miscelaniabackbone = 0;
+                
+                var num = data['paresFibras']*2;
+                var value = 0;
+
+                if (num % 24 !== 0) {
+                    value = Math.floor(num / 24) + 1;
+                } else {
+                    value = Math.floor(num / 24);
+                }
     
                
                 // Agora você pode usar o objeto data como desejar
@@ -178,13 +187,12 @@
                 
                 const fixedItems = [
                     `Tomada RJ 45 Fêmea (categoria ${data['categoria']}):${nPontos} unidades`,
-                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: azul): ${patchCordDados}`,
+                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: azul): ${(data['dados']*data['pavimentos']) + (data['voip']*data['pavimentos'])}`,
                     `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: mesma do teto): ${patchCordSeg}`,
                     `Espelho de conexão (Tamanho 2x4 ou 4x4): ${espelhos}`,
                     `Etiquetas para identificação de tomadas e espelho: ${etiquetasTomEsp}`,
                     `Cabo UTP rígido (categoria ${data['categoria']}): ${caboUtp} caixas`,
                     `Etiqueta identificação do cabo de malha horizontal: ${2*nPontos} unidades`,
-                    `Switches 24 portas: ${ppMhtot}`,
                     `PPMH (Patch Panel de Malha Horizontal): ${ppMhtot}`,
                     `Organizador frontal de cabo - Tipo - (Unidade de altura e largura: 19 polegadas): ${orgCabo*data['pavimentos']}`,
                     `Etiquetas de identificação de portas do Patch Panel: ${etiquetaPortaPp*data['pavimentos']}`,
@@ -206,9 +214,9 @@
                 const fixedItems2 = [
                     `DIO (Unid.):${data['pavimentos'] * data['backbones']} `,
                     `Caixa de emenda (Unid.):${data['pavimentos'] * data['backbones']}`,
-                    `Pigtail ${data['caboFibra']} 50x125 simples LC (Unid.):${data['paresFibras']*2* data['pavimentos']}`,
-                    `Acoplador óptico 50x125 LC azul (Unid.): ${data['paresFibras']*data['pavimentos'] * data['backbones']}`,
-                    `Cordão óptico 50x125 simples LC (metros): ${data['paresFibras']*data['pavimentos'] * data['backbones'] * 3}`,
+                    `Pigtail ${data['caboFibra']} 50x125 simples LC (Unid.):${(data['backbones']*(((data['pavimentos']-1)*data['paresFibras']*2)+(data['paresFibras']*2*data['pavimentos'])))}`,
+                    `Acoplador óptico 50x125 LC azul (Unid.): ${(data['backbones']*(((data['pavimentos']-1)*data['paresFibras']*2)+(data['paresFibras']*2*data['pavimentos'])))/2}`,
+                    `Cordão óptico 50x125 simples LC (metros): ${(data['backbones']*(((data['pavimentos']-1)*data['paresFibras']*2)+(data['paresFibras']*2*data['pavimentos'])))}`,
                     `Cabo Óptico ${data['caboFibra']} 50x125 Tight Buffer ${data['paresFibras'] * 2} fibras (metros):  ${metrosdecabooptico}`,
                     `Rack(s) primarios: ${data['backbones'] * data['pavimentos']}`
                 ];
@@ -220,17 +228,18 @@
                     fixedItems3.push(`Backbone Secundário inexistente`);
                     miscelaniabackbone = 0;
                     
-                } else { 
+                } else {
+                    backbone_secundario.innerText = "Backbone Primário"
+                    backbone_primario.innerText = "Backbone Secundário"  
                     miscelaniabackbone = 1;
                         fixedItems3.push(
                         `DIO (Unid.):1`,
                         `Caixa de emenda (Unid.):1`,
-                        `Pigtail SM 50x125 simples LC (Unid.):${data['paresFibras']}`,
-                        `Acoplador óptico 50x125 LC azul (Unid.):${data['backboneExistente']}`,
-                        `Cordão óptico 50x125 simples LC (metros):${data['paresFibras'] * 3}`,
+                        `Pigtail SM 9x125 simples LC (Unid.):${data['paresFibras']*2}`,
+                        `Acoplador óptico 9x125 LC azul (Unid.):${data['paresFibras']}`,
+                        `Cordão óptico 9x125 simples LC (metros):${data['paresFibras'] * 2}`,
                         `Rack(s) secundarios:1`
                         );
-             
                 }
                 
                  const fixedItems4 = [
