@@ -178,7 +178,7 @@
                 
                 const fixedItems = [
                     `Tomada RJ 45 Fêmea (categoria ${data['categoria']}):${nPontos} unidades`,
-                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: azul): ${patchCordDados}`,
+                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: azul): ${(data['dados']*data['pavimentos']) + (data['voip']*data['pavimentos'])}`,
                     `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: mesma do teto): ${patchCordSeg}`,
                     `Espelho de conexão (Tamanho 2x4 ou 4x4): ${espelhos}`,
                     `Etiquetas para identificação de tomadas e espelho: ${etiquetasTomEsp}`,
