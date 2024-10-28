@@ -187,28 +187,28 @@
                 
                 const fixedItems = [
                     `Tomada RJ 45 Fêmea (categoria ${data['categoria']}):${nPontos} unidades`,
-                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: azul): ${(data['dados']*data['pavimentos']) + (data['voip']*data['pavimentos'])}`,
-                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: mesma do teto): ${patchCordSeg}`,
-                    `Espelho de conexão (Tamanho 2x4 ou 4x4): ${espelhos}`,
-                    `Etiquetas para identificação de tomadas e espelho: ${etiquetasTomEsp}`,
+                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: azul): ${(data['dados']*data['pavimentos']) + (data['voip']*data['pavimentos'])} unidades`,
+                    `Cordão de ligação (Patch Cord), (categoria ${data['categoria']}), (Tamanho 3m), (cor: mesma do teto): ${patchCordSeg} unidades`,
+                    `Espelho de conexão (Tamanho 2x4 ou 4x4): ${espelhos} unidades`,
+                    `Etiquetas para identificação de tomadas e espelho: ${etiquetasTomEsp} unidades`,
                     `Cabo UTP rígido (categoria ${data['categoria']}): ${caboUtp} caixas`,
                     `Etiqueta identificação do cabo de malha horizontal: ${2*nPontos} unidades`,
-                    `PPMH (Patch Panel de Malha Horizontal): ${ppMhtot}`,
-                    `Organizador frontal de cabo - Tipo - (Unidade de altura e largura: 19 polegadas): ${orgCabo*data['pavimentos']}`,
-                    `Etiquetas de identificação de portas do Patch Panel: ${etiquetaPortaPp*data['pavimentos']}`,
-                    `Cordão de Ligação, flexível, (Patch Cable), (categoria ${data['categoria']}), (Tamanho: 2m), (cor: azul): ${data['dados']*data['pavimentos']}`,
-                    `Cordão de Ligação, flexível, (Patch Cable), (categoria ${data['categoria']}), (Tamanho: 2m), (cor: amarelo): ${data['voip']*data['pavimentos']}`,
-                    `Cordão de Ligação, flexível, (Patch Cable), (categoria ${data['categoria']}), (Tamanho: 2m), (cor: vermelho): ${data['cftv']*data['pavimentos']}`,
-                    `Rack (${fechadoouaberto}), (Tamanho = ${rack}U) = ${unidRack*data['pavimentos']}`,
-                    `Organizador lateral para Rack (Para os tamanhos correspondentes): ${2 * unidRack * data['pavimentos']}`,
-                    `Bandeja fixa - 19" de largura: ${unidRack * data['pavimentos']}`,
-                    `Bandeja deslizante - 19" de largura: ${unidRack * data['pavimentos']}`,
-                    `Parafuso Porca Gaiola (conjunto com 10 unidades): ${((porcaGaiola) * data['pavimentos'])/10}`,
-                    `Abraçadeira de velcro: ${unidRack * data['pavimentos']}`,
-                    `Abraçadeira Hellermann (conjunto com 100 unidades): ${unidRack * data['pavimentos']}`,
-                    `Filtro de linha com 06 tomadas: ${unidRack * data['pavimentos']}`,
-                    `Etiquetas para Rack: ${unidRack * data['pavimentos']}`,
-                    `Etiquetas para identificação dos patch Cables: ${(2 * data['pavimentos'] * data['cftv']) + (2 * data['pavimentos'] * data['dados']) + (2 * data['pavimentos'] * data['voip'])}`
+                    `PPMH (Patch Panel de Malha Horizontal): ${ppMhtot} unidades`,
+                    `Organizador frontal de cabo - Tipo - (Unidade de altura e largura: 19 polegadas): ${orgCabo*data['pavimentos']} unidades`,
+                    `Etiquetas de identificação de portas do Patch Panel: ${etiquetaPortaPp*data['pavimentos']} unidades`,
+                    `Cordão de Ligação, flexível, (Patch Cable), (categoria ${data['categoria']}), (Tamanho: 2m), (cor: azul): ${data['dados']*data['pavimentos']} unidades`,
+                    `Cordão de Ligação, flexível, (Patch Cable), (categoria ${data['categoria']}), (Tamanho: 2m), (cor: amarelo): ${data['voip']*data['pavimentos']} unidades`,
+                    `Cordão de Ligação, flexível, (Patch Cable), (categoria ${data['categoria']}), (Tamanho: 2m), (cor: vermelho): ${data['cftv']*data['pavimentos']} unidades`,
+                    `Rack (${fechadoouaberto}), (Tamanho = ${rack}U) = ${unidRack*data['pavimentos']} unidades`,
+                    `Organizador lateral para Rack (Para os tamanhos correspondentes): ${2 * unidRack * data['pavimentos']} unidades`,
+                    `Bandeja fixa - 19" de largura: ${unidRack * data['pavimentos']} unidades`,
+                    `Bandeja deslizante - 19" de largura: ${unidRack * data['pavimentos']} unidades`,
+                    `Parafuso Porca Gaiola (conjunto com 10 unidades): ${((porcaGaiola) * data['pavimentos'])/10} conjuntos`,
+                    `Abraçadeira de velcro: ${unidRack * data['pavimentos']} rolo 3m`,
+                    `Abraçadeira Hellermann (conjunto com 100 unidades): ${unidRack * data['pavimentos']} conjuntos`,
+                    `Filtro de linha com 06 tomadas: ${unidRack * data['pavimentos']} unidades`,
+                    `Etiquetas para Rack: ${unidRack * data['pavimentos']} unidades`,
+                    `Etiquetas para identificação dos patch Cables: ${(2 * data['pavimentos'] * data['cftv']) + (2 * data['pavimentos'] * data['dados']) + (2 * data['pavimentos'] * data['voip'])} unidades`
                 ];
 
                 const fixedItems2 = [
@@ -218,7 +218,7 @@
                     `Acoplador óptico 50x125 LC azul (Unid.): ${(data['backbones']*(((data['pavimentos']-1)*data['paresFibras']*2)+(data['paresFibras']*2*data['pavimentos'])))/2}`,
                     `Cordão óptico 50x125 simples LC (metros): ${(data['backbones']*(((data['pavimentos']-1)*data['paresFibras']*2)+(data['paresFibras']*2*data['pavimentos'])))}`,
                     `Cabo Óptico ${data['caboFibra']} 50x125 Tight Buffer ${data['paresFibras'] * 2} fibras (metros):  ${metrosdecabooptico}`,
-                    `Rack(s) primarios: ${data['backbones'] * data['pavimentos']}`
+                    `Rack(s) 8u (Unid.): ${data['backbones'] * data['pavimentos']}`
                 ];
                 
                
@@ -233,20 +233,20 @@
                     backbone_primario.innerText = "Backbone Secundário"  
                     miscelaniabackbone = 1;
                         fixedItems3.push(
-                        `DIO (Unid.):1`,
-                        `Caixa de emenda (Unid.):1`,
+                        `DIO (Unid.): 1`,
+                        `Caixa de emenda (Unid.): 1`,
                         `Pigtail SM 9x125 simples LC (Unid.):${data['paresFibras']*2}`,
-                        `Acoplador óptico 9x125 LC azul (Unid.):${data['paresFibras']}`,
-                        `Cordão óptico 9x125 simples LC (metros):${data['paresFibras'] * 2}`,
-                        `Rack(s) secundarios:1`
+                        `Acoplador óptico 9x125 LC azul (Unid.): ${data['paresFibras']}`,
+                        `Cordão óptico 9x125 simples LC (metros): ${data['paresFibras'] * 2}`,
+                        `Rack(s) 8u (Unid.): 1`
                         );
                 }
                 
                  const fixedItems4 = [
-                    `Abraçadeira de velcro para rack(s) de bacbone: ${data['backbones'] * data['pavimentos'] + miscelaniabackbone}`,
-                    `Abraçadeira Hellermann conjunto com 100 Unidades para rack(s) de bacbone: ${data['backbones'] * data['pavimentos'] + miscelaniabackbone}`,
+                    `Abraçadeira de velcro para rack(s) de backbone: ${data['backbones'] * data['pavimentos'] + miscelaniabackbone}`,
+                    `Abraçadeira Hellermann conjunto com 100 Unidades para rack(s) de backbone: ${data['backbones'] * data['pavimentos'] + miscelaniabackbone}`,
                     `Filtro de linha com 08 tomadas para rack(s) de backbone:${(data['backbones'] * data['pavimentos'] )+miscelaniabackbone}`,
-                    `Etiquetas para rack(s) de bacbone:${(data['backbones'] * data['pavimentos'] )+ miscelaniabackbone }`,
+                    `Etiquetas para rack(s) de backbone:${(data['backbones'] * data['pavimentos'] )+ miscelaniabackbone }`,
                     `total de rack(s) de backbone:${(data['backbones'] * data['pavimentos']) +miscelaniabackbone} `
                 ];
 
